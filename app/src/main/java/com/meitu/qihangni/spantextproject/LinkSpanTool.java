@@ -39,8 +39,8 @@ public class LinkSpanTool {
         public static final String REGEXT_AT = "@[\\w\\p{InCJKUnifiedIdeographs}-]{1,26}";
 
         public static final String SCHEME_TOPIC = "topic:";
-        public static final String SCHEME_URL = "url:";
-        public static final String SCHEME_AT = "at:";
+        public static final String SCHEME_URL = "https:";
+        public static final String SCHEME_AT = "user:";
     }
 
     public static void linkSpan(Spanned content, TextView textView, int color, @Nullable OnClickString onClickString, @Nullable Config config) {
