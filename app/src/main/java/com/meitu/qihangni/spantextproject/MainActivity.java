@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.tv_str);
         LinkSpanTool.Config config = new LinkSpanTool.Config()
                 .at(false);
-        SpannableString spannableString = new SpannableString("#topic# @userxxx,blog is http://www.baidu.com");
-        LinkSpanTool.linkSpan(spannableString, textView, R.color.colorPrimaryDark, null, config);
+        SpannableString spannableString = new SpannableString("#topic# @userxxx,blog is https://www.baidu.com #another# #123#");
+        LinkSpanTool.linkSpan(spannableString, textView, R.color.colorPrimaryDark, null, null);
     }
 }

@@ -16,12 +16,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CollectionPage">
+        <activity android:name=".SomeTopic">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="collection" android:host="collections"/>
+                <data android:scheme="topic"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".SomeUser">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="user" />
             </intent-filter>
         </activity>
     </application>
