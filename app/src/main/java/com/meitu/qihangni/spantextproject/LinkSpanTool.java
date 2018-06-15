@@ -10,6 +10,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.URLSpan;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
@@ -24,7 +25,6 @@ public class LinkSpanTool {
     @SuppressLint("StaticFieldLeak")
     private static Context mContext;
     private static SpannableStringBuilder spanableInfo;
-    private static SpannableString spanableInfo_temp;
     private static boolean mWeb = true;
     private static boolean mAt = true;
     private static boolean mTopic = true;
@@ -63,33 +63,36 @@ public class LinkSpanTool {
     public static SpannableStringBuilder getSpan(Context context, Spanned spanned, int color, @Nullable OnClickString onClickString) {
         contextWeakReference = new WeakReference<>(context);
         spanableInfo = new SpannableStringBuilder(spanned);
-        spanableInfo_temp = new SpannableString(spanned);
         mContext = contextWeakReference.get();
         initLink();
-        URLSpan[] urlSpans = spanableInfo_temp.getSpans(0, spanableInfo_temp.length(), URLSpan.class);
+        URLSpan[] urlSpans = spanableInfo.getSpans(0, spanableInfo.length(), URLSpan.class);
         for (URLSpan urlSpan : urlSpans) {
             if (urlSpan.getURL().startsWith(LinkPattern.SCHEME_URL)) {
-                int start = spanableInfo_temp.getSpanStart(urlSpan);
-                int end = spanableInfo_temp.getSpanEnd(urlSpan);
-                spanableInfo_temp.removeSpan(urlSpan);
+                int start = spanableInfo.getSpanStart(urlSpan);
+                int end = spanableInfo.getSpanEnd(urlSpan);
+                Log.i("222222", "  start: " + start + "  end :" + end + urlSpan.getURL());
+                spanableInfo.removeSpan(urlSpan);
                 SpannableStringBuilder urlSpannableString = getUrlTextSpannableString(context, urlSpan.getURL());
                 spanableInfo.replace(start, end, urlSpannableString);
                 spanableInfo.setSpan(new ClickableLinkSpan(mContext, urlSpan.getURL(), color, onClickString), start, start + urlSpannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
             if (urlSpan.getURL().startsWith(LinkPattern.SCHEME_TOPIC)) {
-                int start = spanableInfo_temp.getSpanStart(urlSpan);
-                int end = spanableInfo_temp.getSpanEnd(urlSpan);
-                spanableInfo_temp.removeSpan(urlSpan);
+                int start = spanableInfo.getSpanStart(urlSpan);
+                int end = spanableInfo.getSpanEnd(urlSpan);
+                Log.i("222222", "  start: " + start + "  end :" + end + urlSpan.getURL());
+                spanableInfo.removeSpan(urlSpan);
                 spanableInfo.setSpan(new ClickableLinkSpan(mContext, urlSpan.getURL(), color, onClickString), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
             if (urlSpan.getURL().startsWith(LinkPattern.SCHEME_AT)) {
-                int start = spanableInfo_temp.getSpanStart(urlSpan);
-                int end = spanableInfo_temp.getSpanEnd(urlSpan);
-                spanableInfo_temp.removeSpan(urlSpan);
+                int start = spanableInfo.getSpanStart(urlSpan);
+                int end = spanableInfo.getSpanEnd(urlSpan);
+                Log.i("222222", "  start: " + start + "  end :" + end + urlSpan.getURL());
+                spanableInfo.removeSpan(urlSpan);
                 spanableInfo.setSpan(new ClickableLinkSpan(mContext, urlSpan.getURL(), color, onClickString), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
 
         }
+        Log.i("222222", spanableInfo.toString());
         return spanableInfo;
     }
 
@@ -120,22 +123,22 @@ public class LinkSpanTool {
      * 识别话题
      */
     private static void initTopic() {
-        Linkify.addLinks(spanableInfo_temp, Pattern.compile(LinkPattern.REGEX_TOPIC), LinkPattern.SCHEME_TOPIC);
+        Linkify.addLinks(spanableInfo, Pattern.compile(LinkPattern.REGEX_TOPIC), LinkPattern.SCHEME_TOPIC);
     }
 
     /**
      * 识别网址
      */
     private static void initWeb() {
-        Linkify.addLinks(spanableInfo_temp, Pattern.compile(LinkPattern.REGEX_WEB), LinkPattern.SCHEME_URL);
-        Linkify.addLinks(spanableInfo_temp, Pattern.compile(LinkPattern.REGEX_WEB2), LinkPattern.SCHEME_URL);
+        Linkify.addLinks(spanableInfo, Pattern.compile(LinkPattern.REGEX_WEB), LinkPattern.SCHEME_URL);
+        Linkify.addLinks(spanableInfo, Pattern.compile(LinkPattern.REGEX_WEB2), LinkPattern.SCHEME_URL);
     }
 
     /**
      * 识别@
      */
     private static void initAt() {
-        Linkify.addLinks(spanableInfo_temp, Pattern.compile(LinkPattern.REGEXT_AT), LinkPattern.SCHEME_AT);
+        Linkify.addLinks(spanableInfo, Pattern.compile(LinkPattern.REGEXT_AT), LinkPattern.SCHEME_AT);
     }
 
     interface OnClickString {
