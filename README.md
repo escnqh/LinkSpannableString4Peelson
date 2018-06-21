@@ -24,9 +24,13 @@ https://www.baidu.com
 
 #某个话题#
 
-++我的收藏++
 
 
 1. Linkify对~~文本~~进行处理（改成SpannableString）
 2. 监听点击跳转
     - 坑）对textView要同时setMovementMethod()才有点击效果
+
+#### 思路
+1. 对传入文本进行正则匹配
+2. 对匹配到的链接进行替换（加颜色、网址转换等）
+3. 设置点击事件
