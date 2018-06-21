@@ -1,4 +1,4 @@
-package com.meitu.qihangni.spantextproject;
+package com.meitu.qihangni.spantextproject.LinkSpannableString;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,12 +8,15 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.View;
+
+import com.meitu.qihangni.spantextproject.R;
 
 import java.util.List;
 
 /**
+ * 截获富文本的点击事件
+ *
  * @author nqh 2018/6/15
  */
 class ClickableLinkSpan extends ClickableSpan implements View.OnClickListener {
@@ -21,9 +24,9 @@ class ClickableLinkSpan extends ClickableSpan implements View.OnClickListener {
     private String string;
     public int textcolor = 0xffeeeeee;
     private boolean mIsPressed;
-    private LinkSpanTool.OnClickString mOnClickString;
+    private OnClickString mOnClickString;
 
-    public ClickableLinkSpan(Context context, String string, int color, @Nullable LinkSpanTool.OnClickString mOnClickString) {
+    public ClickableLinkSpan(Context context, String string, int color, @Nullable OnClickString mOnClickString) {
         this.mContext = context;
         this.string = string;
         this.mOnClickString = mOnClickString;
@@ -43,7 +46,7 @@ class ClickableLinkSpan extends ClickableSpan implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         v.setTag("false");
-        Log.i("111111111", string);
+        //判断用户是否自定义点击事件
         if (LinkSpanTool.isCustomClick()) {
             mOnClickString.onClickString(string);
         } else {
@@ -51,10 +54,16 @@ class ClickableLinkSpan extends ClickableSpan implements View.OnClickListener {
         }
     }
 
+    /**
+     * 对点击焦点的富文本做出反应
+     *
+     * @param string
+     */
     private void doAction(String string) {
         PackageManager packageManager = mContext.getPackageManager();
         Intent intent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse(string));
+        //判断目标是否可达
         List<ResolveInfo> activities = packageManager.queryIntentActivities(intent, 0);
         boolean isValid = !activities.isEmpty();
         if (isValid) {
@@ -62,12 +71,17 @@ class ClickableLinkSpan extends ClickableSpan implements View.OnClickListener {
         }
     }
 
+    /**
+     * 设置文本的样式
+     *
+     * @param tp
+     */
     @Override
     public void updateDrawState(TextPaint tp) {
-        // TODO Auto-generated method stub
         tp.setColor(mIsPressed ? mContext.getResources().getColor(android.R.color.black) : textcolor);
         tp.bgColor = mIsPressed ? 0xffeeeeee : mContext.getResources().getColor(android.R.color.transparent);
-        tp.setUnderlineText(false);//设置下划线
+        //设置取消下划线
+        tp.setUnderlineText(false);
         tp.clearShadowLayer();
     }
 }

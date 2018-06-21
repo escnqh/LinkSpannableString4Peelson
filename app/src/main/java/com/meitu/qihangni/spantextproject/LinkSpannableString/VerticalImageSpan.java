@@ -1,4 +1,4 @@
-package com.meitu.qihangni.spantextproject;
+package com.meitu.qihangni.spantextproject.LinkSpannableString;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.widget.TextView;
 
+import com.meitu.qihangni.spantextproject.LinkSpannableString.LinkSpanTool;
+
 public class MainActivity extends AppCompatActivity {
     private String TAG = this.getClass().getName();
 
