@@ -17,7 +17,7 @@ public class LinkSpanTool {
     private static WeakReference<Context> mContextWeakReference;
     @SuppressLint("StaticFieldLeak")
     private static Context mContext;
-    private static SpannableStringBuilder mSpanableInfo;
+    private static SpannableStringBuilder mSpannableInfo;
     private static boolean isCustomClick = false;
     private static float mTextSize;
     private static SpanModeManager mSpanModeManager;
@@ -49,12 +49,12 @@ public class LinkSpanTool {
      */
     public static SpannableStringBuilder getSpan(Context context, Spanned spanned, int color, @Nullable OnClickString onClickString) {
         mContextWeakReference = new WeakReference<>(context);
-        mSpanableInfo = new SpannableStringBuilder(spanned);
+        mSpannableInfo = new SpannableStringBuilder(spanned);
         mContext = mContextWeakReference.get();
         for (BaseSpanMode spanMode : mSpanModeManager.getSpanModeList()) {
-            mSpanableInfo = spanMode.linkSpan(mSpanableInfo, mContext, color, onClickString);
+            mSpannableInfo = spanMode.linkSpan(mSpannableInfo, mContext, color, onClickString);
         }
-        return mSpanableInfo;
+        return mSpannableInfo;
     }
 
 }
