@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SomeTopic">
+        <activity android:name=".TopicActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -24,7 +24,7 @@
                 <data android:scheme="topic"/>
             </intent-filter>
         </activity>
-        <activity android:name=".SomeUser">
+        <activity android:name=".UserActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>

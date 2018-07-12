@@ -10,17 +10,18 @@ import android.widget.TextView;
 /**
  * @author nqh 2018/6/14
  */
-public class SomeTopic extends Activity {
-    private TextView textView;
+public class TopicActivity extends Activity {
+    private TextView mTvTopic;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic);
-        textView=findViewById(R.id.tv_topic);
-        Intent intent=getIntent();
+        mTvTopic = findViewById(R.id.tv_topic);
+        Intent intent = getIntent();
         Uri uri = intent.getData();
         if (uri != null) {
-            textView.setText(uri.toString());
+            mTvTopic.setText(uri.toString());
         }
     }
 
@@ -29,7 +30,7 @@ public class SomeTopic extends Activity {
         super.onNewIntent(intent);
         Uri uri = intent.getData();
         if (uri != null) {
-            textView.setText(uri.getHost());
+            mTvTopic.setText(uri.getHost());
         }
     }
 }

@@ -6,6 +6,10 @@ import android.text.SpannableString;
 import android.widget.TextView;
 
 import com.meitu.qihangni.spantextproject.LinkSpannableString.LinkSpanTool;
+import com.meitu.qihangni.spantextproject.LinkSpannableString.SpanModeManager;
+import com.meitu.qihangni.spantextproject.LinkSpannableString.TopicSpanMode;
+import com.meitu.qihangni.spantextproject.LinkSpannableString.UserSpanMode;
+import com.meitu.qihangni.spantextproject.LinkSpannableString.WebSpanMode;
 
 public class MainActivity extends AppCompatActivity {
     private String TAG = this.getClass().getName();
@@ -14,10 +18,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView textView = findViewById(R.id.tv_str);
-        LinkSpanTool.Config config = new LinkSpanTool.Config()
-                .at(false);
+        TextView tv_content = findViewById(R.id.tv_str);
         SpannableString spannableString = new SpannableString("#topic# @userxxx,blog is https://www.baidu.com #another# #123#");
-        LinkSpanTool.linkSpan(spannableString, textView, R.color.colorPrimaryDark, null, null);
+        SpanModeManager spanModeManager = new SpanModeManager()
+                .addMode(new TopicSpanMode())
+                .addMode(new UserSpanMode())
+                .addMode(new WebSpanMode((int) tv_content.getTextSize()));
+        LinkSpanTool.linkSpan(spannableString, tv_content, spanModeManager, R.color.colorPrimaryDark, null);
+
     }
 }
