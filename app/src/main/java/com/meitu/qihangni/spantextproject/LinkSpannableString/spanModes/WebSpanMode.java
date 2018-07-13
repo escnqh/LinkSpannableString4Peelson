@@ -1,4 +1,4 @@
-package com.meitu.qihangni.spantextproject.LinkSpannableString;
+package com.meitu.qihangni.spantextproject.LinkSpannableString.spanModes;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -8,6 +8,11 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.URLSpan;
 import android.text.util.Linkify;
+
+
+import com.meitu.qihangni.spantextproject.LinkSpannableString.clickCallbaks.ClickableLinkSpan;
+import com.meitu.qihangni.spantextproject.LinkSpannableString.clickCallbaks.OnClickStringCallback;
+import com.meitu.qihangni.spantextproject.LinkSpannableString.VerticalImageSpan;
 
 import com.meitu.qihangni.spantextproject.R;
 
@@ -22,14 +27,19 @@ public class WebSpanMode implements BaseSpanMode {
     private static final String REGEX_WEB2 = "https://[a-zA-Z0-9+&@#/%?=~_\\\\-|!:,\\\\.;]*[a-zA-Z0-9+&@#/%=~_|]";
     private static final String SCHEME_WEB2 = "https:";
     private static final String SCHEME_WEB = "https:";
-    private int mTextSize;
+    private int mTextSize = 20;
+    private int mColor = R.color.colorPrimaryDark;
+    private OnClickStringCallback mOnClickStringCallback;
 
-    public WebSpanMode(int textSize) {
+
+    public WebSpanMode(int textSize, int color, @Nullable OnClickStringCallback onClickStringCallback) {
         this.mTextSize = textSize;
+        this.mColor = color;
+        this.mOnClickStringCallback = onClickStringCallback;
     }
 
     @Override
-    public SpannableStringBuilder linkSpan(SpannableStringBuilder spannableInfo, Context context, int color, @Nullable OnClickString onClickString) {
+    public SpannableStringBuilder linkSpan(SpannableStringBuilder spannableInfo, Context context) {
         Linkify.addLinks(spannableInfo, Pattern.compile(REGEX_WEB), SCHEME_WEB);
         Linkify.addLinks(spannableInfo, Pattern.compile(REGEX_WEB2), SCHEME_WEB2);
         URLSpan[] urlSpans = spannableInfo.getSpans(0, spannableInfo.length(), URLSpan.class);
@@ -40,7 +50,7 @@ public class WebSpanMode implements BaseSpanMode {
                 spannableInfo.removeSpan(urlSpan);
                 SpannableStringBuilder urlSpannableString = getUrlTextSpannableString(context, urlSpan.getURL());
                 spannableInfo.replace(start, end, urlSpannableString);
-                spannableInfo.setSpan(new ClickableLinkSpan(context, urlSpan.getURL(), color, onClickString), start, start + urlSpannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                spannableInfo.setSpan(new ClickableLinkSpan(context, urlSpan.getURL(), mColor, mOnClickStringCallback), start, start + urlSpannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
         return spannableInfo;

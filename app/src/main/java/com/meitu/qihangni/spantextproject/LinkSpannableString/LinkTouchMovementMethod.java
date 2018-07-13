@@ -7,7 +7,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.MotionEvent;
 import android.widget.TextView;
 
-import com.meitu.qihangni.spantextproject.LinkSpannableString.ClickableLinkSpan;
+import com.meitu.qihangni.spantextproject.LinkSpannableString.clickCallbaks.ClickableLinkSpan;
 
 /**
  * 重写文字触摸事件，设置点击效果

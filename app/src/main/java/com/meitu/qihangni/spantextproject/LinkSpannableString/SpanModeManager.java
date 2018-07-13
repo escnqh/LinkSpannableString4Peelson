@@ -1,5 +1,10 @@
 package com.meitu.qihangni.spantextproject.LinkSpannableString;
 
+import android.text.SpannableString;
+import android.widget.TextView;
+
+import com.meitu.qihangni.spantextproject.LinkSpannableString.spanModes.BaseSpanMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +22,11 @@ public class SpanModeManager {
             }
         }
         spanModeList.add(spanMode);
+        return this;
+    }
+
+    public SpanModeManager linkSpan(SpannableString spannableString, TextView textView) {
+        LinkSpanTool.linkSpan(spannableString, textView, this);
         return this;
     }
 

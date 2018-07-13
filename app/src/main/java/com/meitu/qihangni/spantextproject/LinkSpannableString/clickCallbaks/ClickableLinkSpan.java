@@ -1,4 +1,4 @@
-package com.meitu.qihangni.spantextproject.LinkSpannableString;
+package com.meitu.qihangni.spantextproject.LinkSpannableString.clickCallbaks;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
 
+import com.meitu.qihangni.spantextproject.LinkSpannableString.LinkSpanTool;
+import com.meitu.qihangni.spantextproject.LinkSpannableString.clickCallbaks.OnClickStringCallback;
 import com.meitu.qihangni.spantextproject.R;
 
 import java.util.List;
@@ -19,17 +21,17 @@ import java.util.List;
  *
  * @author nqh 2018/6/15
  */
-class ClickableLinkSpan extends ClickableSpan implements View.OnClickListener {
+public class ClickableLinkSpan extends ClickableSpan implements View.OnClickListener {
     private Context mContext;
     private String string;
     public int textcolor = 0xffeeeeee;
     private boolean mIsPressed;
-    private OnClickString mOnClickString;
+    private OnClickStringCallback mOnClickStringCallback;
 
-    public ClickableLinkSpan(Context context, String string, int color, @Nullable OnClickString mOnClickString) {
+    public ClickableLinkSpan(Context context, String string, int color, @Nullable OnClickStringCallback mOnClickStringCallback) {
         this.mContext = context;
         this.string = string;
-        this.mOnClickString = mOnClickString;
+        this.mOnClickStringCallback = mOnClickStringCallback;
 
         //设置颜色
         if (color != -100) {
@@ -47,8 +49,8 @@ class ClickableLinkSpan extends ClickableSpan implements View.OnClickListener {
     public void onClick(View v) {
         v.setTag("false");
         //判断用户是否自定义点击事件
-        if (LinkSpanTool.isCustomClick()) {
-            mOnClickString.onClickString(string);
+        if (null != mOnClickStringCallback) {
+            mOnClickStringCallback.onClickString(string);
         } else {
             doAction(string);
         }
