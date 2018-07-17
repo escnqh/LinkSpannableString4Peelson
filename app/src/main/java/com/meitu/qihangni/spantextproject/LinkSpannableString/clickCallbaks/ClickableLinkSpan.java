@@ -24,7 +24,7 @@ import java.util.List;
 public class ClickableLinkSpan extends ClickableSpan implements View.OnClickListener {
     private Context mContext;
     private String string;
-    public int textcolor = 0xffeeeeee;
+    private int textcolor = 0xffeeeeee;
     private boolean mIsPressed;
     private OnClickStringCallback mOnClickStringCallback;
 
